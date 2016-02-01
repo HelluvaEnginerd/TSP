@@ -31,7 +31,7 @@ int main() {
     vector< vector<double> > cityDistances;
     vector<pair<double, double>> cityLocations;
     
-    cout << "clocks resolution: 1000000" << endl;
+    cout << "clocks resolution: 100,000,000 ticks per second : 0.1 nanoseconds per tick." << endl;
     
     
     int numCities = 0;
@@ -125,7 +125,7 @@ int main() {
 
 vector<pair<double, double>> randomPointGenerator(int numCities){
     vector<pair<double, double>> cityLocations;
-    uniform_int_distribution<double> distribution(0, 100000);
+    uniform_int_distribution<double> distribution(0, 1000);
     for (int i = 0; i < numCities; i ++) {
         pair<double, double> temp(distribution(RNG), distribution(RNG));
         cityLocations.push_back(temp);
@@ -179,7 +179,7 @@ vector<double> exhaustiveSearch(vector<int>& cities, vector< vector<double>>& ci
     
     int numRuns = 0;
     
-    cout << "Enter number of times to rub this configuration with EXHAUSTIVE SEARCH: ";
+    cout << "Enter number of times to run this configuration with EXHAUSTIVE SEARCH: ";
     cin >> numRuns;
     vector<double> EStimes;
     for (int i = 0; i < numRuns; i++) {
@@ -196,10 +196,9 @@ vector<double> exhaustiveSearch(vector<int>& cities, vector< vector<double>>& ci
                 minDistance = distance;
                 bestCityArrangement = cities;
             }
-
         }
-        
         clock_t end = clock();
+        
         double elapsedSecs = double(end - begin) / CLOCKS_PER_SEC;
         cout <<  endl << "min distance: " << minDistance << endl;
         cout << "Best city arrangement: ";
@@ -223,14 +222,13 @@ vector<double> nearestNeighborSearch(vector<int> cities, vector<vector<double>> 
     for (int i = 0; i < numRuns; i++) {
         int currentCity = 0;
         int nextCity = -1;
-        double minDistance = numeric_limits<double>::max();
         double shortestPath = 0;
         vector<int> bestCityArragnement;
         vector<int> citiesCopy = cities;
         
         clock_t begin = clock();
         while (citiesCopy.size() > 1) {
-            minDistance = numeric_limits<double>::max();
+            double minDistance = numeric_limits<double>::max();
             citiesCopy.erase(remove(citiesCopy.begin(), citiesCopy.end(), currentCity));
             
             bestCityArragnement.push_back(currentCity);
